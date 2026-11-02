@@ -2,6 +2,8 @@
 
 Consume `order.created` (consumer group `notification-service`), lưu notification. Idempotent theo `eventId` (unique constraint) vì Kafka giao at-least-once. Lỗi: retry 3 lần rồi đẩy sang `order.created-dlt`.
 
+Event mới mang `payload.items[]`; message tóm tắt từng dòng và cắt còn 500 ký tự. Event cũ không có `items` vẫn đọc được (fallback "your items"), nên consumer và producer deploy độc lập được.
+
 | Method | Path | Auth |
 |---|---|---|
 | GET | `/api/notifications` | JWT |
